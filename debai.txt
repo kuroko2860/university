@@ -1,0 +1,19 @@
+XÂY DỰNG WEBSITE HỖ TRỢ TRA CỨU THÔNG TIN CÁC TRƯỜNG ĐẠI HỌC VÀ CAO ĐẲNG VIỆT NAM
+2. Nội dung và yêu cầu 
+Hiện nay Việt Nam có rất nhiều trường đại học và cao đẳng với nhiều ngành nghề đào tạo khác nhau. 
+Nhằm phục nhu cầu tra cứu cho thí sinh trong các mùa tuyển sinh, bộ giáo dục và đào tạo quyết định xây dựng website hỗ trợ tra cứu 
+thông tin các trường đại học và cao đẳng.
+
+Hệ thống quản lý được mô tả như sau: 
+1. Người quản trị hệ thống cần đăng nhập vào hệ thống để thêm mới một trường đại học, cao đẳng hoặc cập nhật hay xóa thông tin về trường đã có.
+Ngoài các thông tin cơ bản như: mã trường, tên trường, địa chỉ chính và địa chỉ các cơ sở của trường, số điện thoại, fax, email, website, ảnh đại diện.
+Thì hệ thống còn cung cấp danh mục các ngành nghề đào tạo của trường và thông tin chi tiết về ban giám hiệu nhà trường. 
+2. Hệ thống hỗ trợ chức năng tra cứu thông tin về trường theo nhiều tiêu chí. 
+3. Trước mỗi mùa thi, người quản trị hệ thống sẽ cập nhật thông tin về các ngành được mở cũng như chỉ tiêu của từng ngành cho các trường. 
+4. Dựa vào danh mục các ngành nghề đào tạo,
+ thí sinh có thể tìm thấy các trường đại học, cao đẳng để đưa vào danh sách các trường mà thí sinh quan tâm và tải xuống để lưu vào máy
+ hoặc in danh sách các thông tin cơ bản về các trường này để phục vụ cho nhu cầu đăng ký thi tuyển sinh sau này. 
+5. Hệ thống cũng cung cấp chức năng báo cáo thống kê và in ấn.
+- Báo cáo thống kê danh sách các trường được tìm kiếm nhiều nhất 
+- Báo cáo thống kê danh sách các chuyên ngành được tìm kiếm nhiều nhất 
+- Báo cáo thống kê tỉ lệ tìm kiếm và chọn cùng một chuyên ngành với các trường đại học khác nhau…
