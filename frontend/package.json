@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "axios": "^1.7.7",
+    "framer-motion": "^11.5.4",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.3",
     "jwt-decode": "^4.0.0",
@@ -19,7 +23,8 @@
     "react-hook-form": "^7.53.0",
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "twind": "^0.16.19"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

@@ -7,18 +7,18 @@ function Stats() {
     // Import useNavigate hook at the top of the file
 
     // Navigate to the Stock page
-    navigate("/stock");
+    navigate("/popular-universities");
   };
 
   const handleExpiredClick = () => {
     // Logic to show expired medicines
     // Navigate to the Expired page
-    navigate("/expired");
+    navigate("/popular-majors");
   };
 
   const handleExpiringSoonClick = () => {
     // Logic to show medicines expiring soon
-    navigate("/expire-soon");
+    navigate("/major-rate");
   };
 
   return (
@@ -28,19 +28,19 @@ function Stats() {
         onClick={handleStockClick}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4 "
       >
-        Xem thuốc tồn kho
+        Xem truong tim kiem nhieu nhat
       </button>
       <button
         onClick={handleExpiredClick}
         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded m-4"
       >
-        Xem thuốc quá hạn
+        Xem nganh hot nhat
       </button>
       <button
         onClick={handleExpiringSoonClick}
         className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded m-4"
       >
-        Xem thuốc sắp quá hạn
+        Thong ke ti le chon nganh
       </button>
     </div>
   );

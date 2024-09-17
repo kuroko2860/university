@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
@@ -27,10 +26,26 @@ const Layout = () => {
           </li>
           <li>
             <a
-              href="/truong"
+              href="/favourite"
+              className="text-white hover:text-gray-300 block py-2 px-4"
+            >
+              Favorite
+            </a>
+          </li>
+          <li>
+            <a
+              href="/university"
               className="text-white hover:text-gray-300 block py-2 px-4"
             >
               University
+            </a>
+          </li>
+          <li>
+            <a
+              href="/major-group"
+              className="text-white hover:text-gray-300 block py-2 px-4"
+            >
+              Major group
             </a>
           </li>
           <li>
