@@ -40,7 +40,10 @@ async function getCampusesById(req, res) {
 async function createCampuses(req, res) {
   try {
     const newCampus = req.body;
-    const result = await campusService.createCampuses(newCampus);
+    const result = await campusService.createCampuses(
+      req.params.university_id,
+      newCampus
+    );
     res.json(result);
   } catch (error) {
     console.error("Error creating Campus: ", error);
@@ -51,8 +54,13 @@ async function createCampuses(req, res) {
 async function updateCampuses(req, res) {
   try {
     const id = req.params.id;
+    const university_id = req.params.university_id;
     const updatedCampus = req.body;
-    const result = await campusService.updateCampuses(id, updatedCampus);
+    const result = await campusService.updateCampuses(
+      university_id,
+      id,
+      updatedCampus
+    );
     if (!result) {
       return res.status(404).json({ message: "Campus not found" });
     }

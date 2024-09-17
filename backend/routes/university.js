@@ -8,6 +8,9 @@ router.get("/", universityController.getAllUniversities);
 // Get university by ID
 router.get("/:id", universityController.getUniversityById);
 
+// Get university by major name
+router.get("/major/:major_name", universityController.getUniversityByMajorName);
+
 // Create a new university
 router.post("/", universityController.createUniversity);
 

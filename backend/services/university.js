@@ -85,10 +85,27 @@ async function deleteUniversity(id) {
   }
 }
 
+async function getUniversityByMajorName(major_name) {
+  try {
+    let pool = await poolPromise;
+    let result = await pool
+      .request()
+      .input("major_name", sql.NVarChar, major_name)
+      .query(
+        "SELECT * FROM universities WHERE id IN (SELECT university_id FROM majors WHERE major_name = @major_name)"
+      );
+    return result.recordset;
+  } catch (error) {
+    console.error("Error fetching universities: ", error);
+    return [];
+  }
+}
+
 module.exports = {
   getAllUniversities,
   getUniversityById,
   createUniversity,
   updateUniversity,
   deleteUniversity,
+  getUniversityByMajorName,
 };

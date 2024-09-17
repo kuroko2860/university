@@ -1,5 +1,18 @@
 const { sql, poolPromise } = require("../db");
 
+async function getAllMajors() {
+  try {
+    let pool = await poolPromise;
+    let result = await pool
+      .request()
+      .query("SELECT distinct major_name FROM majors");
+    return result.recordset;
+  } catch (error) {
+    console.error("Error fetching majors: ", error);
+    return [];
+  }
+}
+
 async function getAllMajorsByUniversityId(university_id) {
   try {
     let pool = await poolPromise;
@@ -37,11 +50,11 @@ async function createMajor(university_id, major) {
     let result = await pool
       .request()
       .input("major_name", sql.NVarChar, major.major_name)
-      .input("major_group", sql.NVarChar, major.major_group)
+      .input("group_id", sql.Int, major.group_id)
       .input("major_quota", sql.Int, major.major_quota)
       .input("university_id", sql.Int, university_id)
       .query(
-        "INSERT INTO majors (major_name, major_group, major_quota, university_id) VALUES (@major_name, @major_group, @major_quota, @university_id)"
+        "INSERT INTO majors (major_name, group_id, major_quota, university_id) VALUES (@major_name, @group_id, @major_quota, @university_id)"
       );
     return result;
   } catch (error) {
@@ -55,14 +68,15 @@ async function updateMajor(university_id, id, major) {
     let pool = await poolPromise;
     let result = await pool
       .request()
+      .input("major_name", sql.NVarChar, major.major_name)
+      .input("group_id", sql.Int, major.group_id)
+      .input("major_quota", sql.Int, major.major_quota)
       .input("university_id", sql.Int, university_id)
       .input("id", sql.Int, id)
-      .input("major_name", sql.NVarChar, major.major_name)
-      .input("major_group", sql.NVarChar, major.major_group)
-      .input("major_quota", sql.Int, major.major_quota)
       .query(
-        "UPDATE majors SET major_name = @major_name, major_group = @major_group, major_quota = @major_quota WHERE university_id = @university_id AND major_id = @id"
+        "UPDATE majors SET major_name = @major_name, group_id = @group_id, major_quota = @major_quota WHERE major_id = @id"
       );
+    console.log(result, major);
     return result;
   } catch (error) {
     console.error("Error updating major: ", error);
@@ -108,4 +122,5 @@ module.exports = {
   updateMajor,
   deleteMajor,
   deleteMajorsByUniversityId,
+  getAllMajors,
 };

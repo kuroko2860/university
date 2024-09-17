@@ -1,16 +1,17 @@
-const {
-  getAllMajorsByUniversityId,
-  getMajorById,
-  createMajor,
-  updateMajor,
-  deleteMajor,
-  deleteMajorsByUniversityId,
-} = require("../services/major");
-
+const majorService = require("../services/major");
 async function getAllMajors(req, res) {
   try {
-    const universityId = req.params.universityId;
-    const result = await getAllMajorsByUniversityId(universityId);
+    const result = await majorService.getAllMajors();
+    res.json(result);
+  } catch (error) {
+    console.error("Error fetching majors: ", error);
+    res.status(500).send("Server Error");
+  }
+}
+async function getAllMajorsByUniversityId(req, res) {
+  try {
+    const university_id = req.params.university_id;
+    const result = await majorService.getAllMajorsByUniversityId(university_id);
     res.json(result);
   } catch (error) {
     console.error("Error fetching majors: ", error);
@@ -19,9 +20,9 @@ async function getAllMajors(req, res) {
 }
 async function getMajor(req, res) {
   try {
-    const universityId = req.params.universityId;
-    const majorId = req.params.majorId;
-    const result = await getMajorById(universityId, majorId);
+    const university_id = req.params.university_id;
+    const major_id = req.params.major_id;
+    const result = await majorService.getMajorById(university_id, major_id);
     if (!result) {
       return res.status(404).json({ message: "Major not found" });
     }
@@ -34,9 +35,9 @@ async function getMajor(req, res) {
 
 async function createMajor(req, res) {
   try {
-    const universityId = req.params.universityId;
+    const university_id = req.params.university_id;
     const newMajor = req.body;
-    const result = await createMajor(universityId, newMajor);
+    const result = await majorService.createMajor(university_id, newMajor);
     res.json(result);
   } catch (error) {
     console.error("Error creating major: ", error);
@@ -46,10 +47,14 @@ async function createMajor(req, res) {
 
 async function updateMajor(req, res) {
   try {
-    const universityId = req.params.universityId;
-    const majorId = req.params.majorId;
+    const university_id = req.params.university_id;
+    const major_id = req.params.id;
     const updatedMajor = req.body;
-    const result = await updateMajor(universityId, majorId, updatedMajor);
+    const result = await majorService.updateMajor(
+      university_id,
+      major_id,
+      updatedMajor
+    );
     if (!result) {
       return res.status(404).json({ message: "Major not found" });
     }
@@ -62,9 +67,9 @@ async function updateMajor(req, res) {
 
 async function deleteMajor(req, res) {
   try {
-    const universityId = req.params.universityId;
-    const majorId = req.params.majorId;
-    const result = await deleteMajor(universityId, majorId);
+    const university_id = req.params.university_id;
+    const major_id = req.params.id;
+    const result = await majorService.deleteMajor(university_id, major_id);
     if (!result) {
       return res.status(404).json({ message: "Major not found" });
     }
@@ -77,8 +82,8 @@ async function deleteMajor(req, res) {
 
 async function deleteMajorsByUniversityId(req, res) {
   try {
-    const universityId = req.params.universityId;
-    const result = await deleteMajorsByUniversityId(universityId);
+    const university_id = req.params.university_id;
+    const result = await majorService.deleteMajorsByUniversityId(university_id);
     if (!result) {
       return res.status(404).json({ message: "University not found" });
     }
@@ -90,6 +95,7 @@ async function deleteMajorsByUniversityId(req, res) {
 }
 
 module.exports = {
+  getAllMajorsByUniversityId,
   getAllMajors,
   getMajor,
   createMajor,

@@ -13,5 +13,9 @@ router.post("/", favorite_listController.createFavoriteList);
 
 // Delete danh sach favorite_list by ID
 router.delete("/:id", favorite_listController.deleteFavoriteList);
+router.delete(
+  "/:user_id/:university_id",
+  favorite_listController.deleteFavoriteListByUniversityAndUserId
+);
 
 module.exports = router;

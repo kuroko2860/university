@@ -50,7 +50,7 @@ async function createAdministrativeBoard(req, res) {
 async function updateAdministrativeBoard(req, res) {
   try {
     const university_id = req.params.university_id;
-    const administrative_board_id = req.params.administrative_board_id;
+    const administrative_board_id = req.params.id;
     const updated_administrative_board = req.body;
     const result = await administrativeBoardService.updateAdministrativeBoard(
       university_id,

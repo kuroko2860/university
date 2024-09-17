@@ -66,10 +66,32 @@ async function deleteFavoriteListByUniversityId(req, res) {
   }
 }
 
+async function deleteFavoriteListByUniversityAndUserId(req, res) {
+  const { user_id, university_id } = req.params;
+  try {
+    const result =
+      await favoriteListService.deleteFavoriteListByUniversityAndUserId(
+        user_id,
+        university_id
+      );
+    if (!result) {
+      return res.status(404).json({ message: "Favorite list not found" });
+    }
+    res.json({ message: "Favorite list deleted successfully" });
+  } catch (error) {
+    console.error(
+      "Error deleting favorite list by university and user id: ",
+      error
+    );
+    res.status(500).send("Server Error");
+  }
+}
+
 module.exports = {
   getAllFavoriteLists,
   getAllUniversitiesByUserId,
   createFavoriteList,
   deleteFavoriteList,
   deleteFavoriteListByUniversityId,
+  deleteFavoriteListByUniversityAndUserId,
 };

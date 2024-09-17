@@ -2,7 +2,7 @@ const universityService = require("../services/university");
 const majorService = require("../services/major");
 const campusService = require("../services/campus");
 const administrativeBoardService = require("../services/administrative_board");
-const searchService = require("../services/search");
+const searchService = require("../services/university_search");
 const favoriteListService = require("../services/favorite_list");
 
 module.exports = {
@@ -13,6 +13,12 @@ module.exports = {
   getUniversityById: async (req, res) => {
     const university = await universityService.getUniversityById(req.params.id);
     res.json(university);
+  },
+  getUniversityByMajorName: async (req, res) => {
+    const universities = await universityService.getUniversityByMajorName(
+      req.params.major_name
+    );
+    res.json(universities);
   },
   createUniversity: async (req, res) => {
     const university = await universityService.createUniversity(req.body);

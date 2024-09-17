@@ -33,9 +33,10 @@ async function createFavoriteList(favoriteList) {
     let result = await pool
       .request()
       .input("user_id", sql.Int, favoriteList.user_id)
+      .input("major_name", sql.NVarChar, favoriteList.major_name)
       .input("university_id", sql.Int, favoriteList.university_id)
       .query(
-        "INSERT INTO favorite_lists (user_id, university_id) VALUES (@user_id, @university_id)"
+        "INSERT INTO favorite_lists (user_id, university_id, major_name) VALUES (@user_id, @university_id, @major_name)"
       );
     return result;
   } catch (error) {
@@ -72,10 +73,32 @@ async function deleteFavoriteListByUniversityId(university_id) {
   }
 }
 
+async function deleteFavoriteListByUniversityAndUserId(user_id, university_id) {
+  try {
+    let pool = await poolPromise;
+    let result = await pool
+      .request()
+      .input("university_id", sql.Int, university_id)
+      .input("user_id", sql.Int, user_id)
+      .query(
+        "DELETE FROM favorite_lists WHERE university_id = @university_id AND user_id = @user_id"
+      );
+    // console.log(result);
+    return result;
+  } catch (error) {
+    console.error(
+      "Error deleting favorite_list by university_id and user_id: ",
+      error
+    );
+    return null;
+  }
+}
+
 module.exports = {
   getAllFavoriteLists,
   getAllUniversitiesByUserId,
   createFavoriteList,
   deleteFavoriteList,
   deleteFavoriteListByUniversityId,
+  deleteFavoriteListByUniversityAndUserId,
 };
