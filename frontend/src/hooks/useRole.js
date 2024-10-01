@@ -1,20 +1,5 @@
-import { useState, useEffect } from "react";
-import jwt from "jwt-decode";
-
-
-const useRole = () => {
-  const [role, setRole] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const decodedToken = jwt.decode(token);
-    const storedRole = decodedToken ? decodedToken.role : "";
-    if (storedRole) {
-      setRole(storedRole);
-    }
-  }, []);
-
-  return role;
+const useAdmin = () => {
+  return localStorage.getItem("user_role") == "admin";
 };
 
-export default useRole;
+export default useAdmin;

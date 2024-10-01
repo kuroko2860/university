@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import UniversityForm from "./UniversityForm";
 import { Popup } from "reactjs-popup";
 import { useNavigate } from "react-router-dom";
+import useAdmin from "../../hooks/useRole";
 
 const University = () => {
   const [searchQueryById, setSearchQueryById] = useState("");
@@ -14,6 +15,7 @@ const University = () => {
   const [editingUniversity, setEditingUniversity] = useState(null);
   const [universities, setUniversities] = useState([]);
   const navigate = useNavigate();
+  const isAdmin = useAdmin();
   const fetchUniversities = async () => {
     try {
       const response = await axios.get("/university");
@@ -65,18 +67,37 @@ const University = () => {
 
   const handleSubmit = async (university) => {
     try {
+      console.log(university);
+      const formData = new FormData();
+      formData.append("id", university.id);
+      formData.append("name", university.name);
+      formData.append("address", university.address);
+      formData.append("phone", university.phone);
+      formData.append("fax", university.fax);
+      formData.append("website", university.website);
+      formData.append("email", university.email);
+      formData.append("logo", university.logo[0]);
       if (editingUniversity) {
-        await axios.put(`/university/${editingUniversity.id}`, university);
+        await axios.put(`/university/${editingUniversity.id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
       } else {
-        await axios.post("/university", university);
+        await axios.post("/university", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
       }
       fetchUniversities();
       setShowForm(false);
       setSearchQueryById("");
       setSearchQueryByName("");
       setSearchQueryByPhone("");
+      toast.success("Thêm thông tin thành công");
     } catch (error) {
-      toast.error("Error submitting university: " + error.message);
+      toast.error("Có lỗi xảy ra: " + error.message);
     }
   };
 
@@ -84,21 +105,24 @@ const University = () => {
     try {
       await axios.delete(`/university/${id}`);
       setUniversities(universities.filter((u) => u.id !== id));
+      toast.success("Xóa thành công");
     } catch (error) {
-      toast.error("Error deleting university: " + error.message);
+      toast.error("Xóa thất bại: " + error.message);
     }
   };
 
   return (
     <div className="container mx-auto p-4">
       <div className="bg-white shadow-md rounded-md p-4">
-        <h1 className="text-3xl font-bold mb-2">Universities</h1>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleAddClick}
-        >
-          Add University
-        </button>
+        <h1 className="text-3xl font-bold mb-2">Danh sách trường</h1>
+        {isAdmin && (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleAddClick}
+          >
+            Thêm trường
+          </button>
+        )}
         <form className="px-12 py-8">
           <div className="flex justify-between items-center space-y-2">
             <label className="text-sm font-medium text-gray-700">
@@ -111,7 +135,7 @@ const University = () => {
               />
             </label>
             <label className="text-sm font-medium text-gray-700">
-              Name:
+              Tên trường:
               <input
                 type="text"
                 value={searchQueryByName}
@@ -120,7 +144,7 @@ const University = () => {
               />
             </label>
             <label className="text-sm font-medium text-gray-700">
-              Phone:
+              SĐT:
               <input
                 type="text"
                 value={searchQueryByPhone}
@@ -134,11 +158,11 @@ const University = () => {
           <thead>
             <tr>
               <th className="px-4 py-2">ID</th>
-              <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Phone</th>
+              <th className="px-4 py-2">Tên trường</th>
+              <th className="px-4 py-2">SĐT</th>
               <th className="px-4 py-2">Fax</th>
               <th className="px-4 py-2">Email</th>
-              <th className="px-4 py-2">Action</th>
+              <th className="px-4 py-2"></th>
             </tr>
           </thead>
           <tbody>
@@ -154,20 +178,24 @@ const University = () => {
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => handleDetailsClick(university)}
                   >
-                    Detail
+                    Chi tiết
                   </button>
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleEditClick(university)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleDeleteClick(university.id)}
-                  >
-                    Delete
-                  </button>
+                  {isAdmin && (
+                    <>
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => handleEditClick(university)}
+                      >
+                        Sửa
+                      </button>
+                      <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => handleDeleteClick(university.id)}
+                      >
+                        Xóa
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

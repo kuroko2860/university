@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "../../config/axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 function MajorRate() {
   const [majors, setMajors] = useState([]);
   const [searchMajor, setSearchMajor] = useState("");
@@ -25,19 +28,58 @@ function MajorRate() {
   useEffect(() => {
     fetchMajors();
   }, []);
+  const handlePrint = () => {
+    const doc = new jsPDF();
+
+    doc.text("Danh sách yêu thích", 10, 10);
+
+    // Define table columns and rows
+    const tableColumns = [
+      "Tên ngành",
+      "Tên trường",
+      "Chỉ tiêu",
+      "Số lượng chọn",
+      "Tỉ lệ chọi",
+    ];
+    const tableRows = majorRate
+      ? majorRate.map((major) => [
+          major.major_name,
+          major.university_name,
+          major.major_quota,
+          major.total_selects,
+          `1 : ${Math.round(major.total_selects / major.major_quota)}`,
+        ])
+      : [];
+
+    // Add table to PDF
+    doc.autoTable({
+      head: [tableColumns],
+      body: tableRows,
+      startY: 20,
+    });
+
+    // Save the PDF
+    doc.save("major-rate.pdf");
+  };
 
   return (
-    <div>
+    <div className="p-4">
+      <button
+        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        onClick={handlePrint}
+      >
+        Tải xuống và in
+      </button>
       <form className="px-12 py-8" onSubmit={handleSubmit}>
         <div className="flex justify-between items-center space-y-2">
           <label className="text-sm font-medium text-gray-700">
-            Majors:
+            Ngành:
             <select
               value={searchMajor}
               onChange={(e) => setSearchMajor(e.target.value)}
               className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
             >
-              <option value="">Select major</option>
+              <option value="">Chọn ngành</option>
               {majors &&
                 majors.map(({ major_name }) => (
                   <option key={major_name} value={major_name}>
@@ -51,18 +93,18 @@ function MajorRate() {
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-          Search
+          Tìm kiếm
         </button>
       </form>
 
       <table className="table-auto w-full mt-4">
         <thead>
           <tr>
-            <th className="px-4 py-2">Major name</th>
-            <th className="px-4 py-2">University name</th>
-            <th className="px-4 py-2">Quota</th>
-            <th className="px-4 py-2">Total selected</th>
-            <th className="px-4 py-2">Rate</th>
+            <th className="px-4 py-2">Tên ngành</th>
+            <th className="px-4 py-2">Tên trường</th>
+            <th className="px-4 py-2">Chỉ tiêu</th>
+            <th className="px-4 py-2">Số lượt chọn</th>
+            <th className="px-4 py-2">Tỉ lệ chọi</th>
           </tr>
         </thead>
         <tbody>

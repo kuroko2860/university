@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { Flex, Button } from "@chakra-ui/react";
 import { tw } from "twind";
 import CustomFormControl from "../../components/CustomFormControl";
-function MajorForm({ onSubmit, onCancel, defaultValue, majorGroups }) {
+function MajorForm({ onSubmit, onCancel, defaultValue }) {
   const {
     register,
     handleSubmit,
@@ -17,14 +17,14 @@ function MajorForm({ onSubmit, onCancel, defaultValue, majorGroups }) {
       className={tw`space-y-2 shadow-lg bg-white p-8 max-h-screen overflow-auto`}
     >
       <CustomFormControl
-        label={"Name"}
+        label={"Tên ngành"}
         register={register}
         registerName={"major_name"}
-        placeholder={"Name"}
+        placeholder={"Tên ngành"}
         errors={errors}
       />
 
-      <label className="block">
+      {/* <label className="block">
         Group:
         <select
           {...register("group_id", { required: true })}
@@ -42,12 +42,12 @@ function MajorForm({ onSubmit, onCancel, defaultValue, majorGroups }) {
               </option>
             ))}
         </select>
-      </label>
+      </label> */}
       <CustomFormControl
-        label={"Quota"}
+        label={"Chỉ tiêu"}
         register={register}
         registerName={"major_quota"}
-        placeholder={"Quota"}
+        placeholder={"Chỉ tiêu"}
         errors={errors}
       />
 
@@ -57,13 +57,13 @@ function MajorForm({ onSubmit, onCancel, defaultValue, majorGroups }) {
           onClick={onCancel}
           className={tw`px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300`}
         >
-          Cancel
+          Hủy
         </Button>
         <Button
           type="submit"
           className={tw`px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-300`}
         >
-          Save
+          Lưu
         </Button>
       </Flex>
     </form>

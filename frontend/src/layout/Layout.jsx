@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom";
 const Layout = () => {
   return (
     <div className="flex">
-      <div className="w-1/6 bg-gray-800 h-screen">
+      <div className="w-1/6 bg-gray-800 h-screen fixed">
         <div className="flex items-center justify-center h-16 text-white text-xl font-bold">
-          University
+          Quản lý trường học
         </div>
         <ul className="mt-4">
           <li>
@@ -13,7 +13,7 @@ const Layout = () => {
               href="/"
               className="text-white hover:text-gray-300 block py-2 px-4"
             >
-              Home
+              Trang chủ
             </a>
           </li>
           <li>
@@ -21,7 +21,7 @@ const Layout = () => {
               href="/search"
               className="text-white hover:text-gray-300 block py-2 px-4"
             >
-              Search
+              Tìm kiếm
             </a>
           </li>
           <li>
@@ -29,7 +29,7 @@ const Layout = () => {
               href="/favourite"
               className="text-white hover:text-gray-300 block py-2 px-4"
             >
-              Favorite
+              Yêu thích
             </a>
           </li>
           <li>
@@ -37,28 +37,28 @@ const Layout = () => {
               href="/university"
               className="text-white hover:text-gray-300 block py-2 px-4"
             >
-              University
+              Trường học
             </a>
           </li>
-          <li>
+          {/* <li>
             <a
               href="/major-group"
               className="text-white hover:text-gray-300 block py-2 px-4"
             >
               Major group
             </a>
-          </li>
+          </li> */}
           <li>
             <a
               href="/statistics"
               className="text-white hover:text-gray-300 block py-2 px-4"
             >
-              Statistics
+              Thống kê
             </a>
           </li>
         </ul>
       </div>
-      <div className="w-5/6 bg-gray-200 h-screen">
+      <div className="ml-auto w-5/6 bg-gray-200 h-screen">
         <Outlet />
       </div>
     </div>

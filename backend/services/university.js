@@ -4,7 +4,21 @@ async function getAllUniversities() {
   try {
     let pool = await poolPromise;
     let result = await pool.request().query("SELECT * FROM universities");
-    return result.recordset;
+    let res = result.recordset.map((university) => {
+      const base64Logo = Buffer.from(university.logo).toString("base64");
+      return {
+        id: university.id,
+        name: university.name,
+        address: university.address,
+        phone: university.phone,
+        fax: university.fax,
+        email: university.email,
+        website: university.website,
+        logo: `data:image/png;base64,${base64Logo}`,
+      };
+    });
+    return res;
+    // return result.recordset;
   } catch (error) {
     console.error("Error fetching universities: ", error);
     return [];
@@ -18,14 +32,28 @@ async function getUniversityById(id) {
       .request()
       .input("id", sql.Int, id)
       .query("SELECT * FROM universities WHERE id = @id");
-    return result.recordset[0];
+    let res = result.recordset.map((university) => {
+      const base64Logo = Buffer.from(university.logo).toString("base64");
+      return {
+        id: university.id,
+        name: university.name,
+        address: university.address,
+        phone: university.phone,
+        fax: university.fax,
+        email: university.email,
+        website: university.website,
+        logo: `data:image/png;base64,${base64Logo}`,
+      };
+    });
+    return res[0];
+    // return result.recordset[0];
   } catch (error) {
     console.error("Error fetching university: ", error);
     return null;
   }
 }
 
-async function createUniversity(university) {
+async function createUniversity(university, logoBuffer) {
   try {
     let pool = await poolPromise;
     let result = await pool
@@ -37,7 +65,7 @@ async function createUniversity(university) {
       .input("fax", sql.NVarChar, university.fax)
       .input("email", sql.NVarChar, university.email)
       .input("website", sql.NVarChar, university.website)
-      .input("logo", sql.NVarChar, university.logo)
+      .input("logo", sql.VarBinary(sql.MAX), logoBuffer)
       .query(
         "INSERT INTO universities (id,name, address, phone, fax, email, website, logo) VALUES (@id,@name, @address, @phone, @fax, @email, @website, @logo)"
       );
@@ -48,7 +76,7 @@ async function createUniversity(university) {
   }
 }
 
-async function updateUniversity(id, university) {
+async function updateUniversity(id, university, logoBuffer) {
   try {
     let pool = await poolPromise;
     let result = await pool
@@ -60,7 +88,7 @@ async function updateUniversity(id, university) {
       .input("fax", sql.NVarChar, university.fax)
       .input("email", sql.NVarChar, university.email)
       .input("website", sql.NVarChar, university.website)
-      .input("logo", sql.NVarChar, university.logo)
+      .input("logo", sql.VarBinary(sql.MAX), logoBuffer)
       .query(
         "UPDATE universities SET name = @name, address = @address, phone = @phone, fax = @fax, email = @email, website = @website, logo = @logo WHERE id = @id"
       );
@@ -94,7 +122,21 @@ async function getUniversityByMajorName(major_name) {
       .query(
         "SELECT * FROM universities WHERE id IN (SELECT university_id FROM majors WHERE major_name = @major_name)"
       );
-    return result.recordset;
+    let res = result.recordset.map((university) => {
+      const base64Logo = Buffer.from(university.logo).toString("base64");
+      return {
+        id: university.id,
+        name: university.name,
+        address: university.address,
+        phone: university.phone,
+        fax: university.fax,
+        email: university.email,
+        website: university.website,
+        logo: `data:image/png;base64,${base64Logo}`,
+      };
+    });
+    return res;
+    // return result.recordset;
   } catch (error) {
     console.error("Error fetching universities: ", error);
     return [];

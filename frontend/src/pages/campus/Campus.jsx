@@ -4,12 +4,14 @@ import { toast } from "react-toastify";
 import CampusForm from "./CampusForm";
 import { Popup } from "reactjs-popup";
 import { useParams } from "react-router-dom";
+import useAdmin from "../../hooks/useRole";
 
 const Campus = () => {
   const { id: universityId } = useParams();
   const [showForm, setShowForm] = useState(false);
   const [editingCampus, setEditingCampus] = useState(null);
   const [campuses, setCampuses] = useState([]);
+  const isAdmin = useAdmin();
 
   const fetchCampuses = async () => {
     try {
@@ -42,6 +44,7 @@ const Campus = () => {
       }
       fetchCampuses();
       setShowForm(false);
+      toast.success("Thêm thông tin thành công");
     } catch (error) {
       toast.error("Error submitting Campus: " + error.message);
     }
@@ -51,6 +54,7 @@ const Campus = () => {
     try {
       await axios.delete(`/campus/${universityId}/${id}`);
       setCampuses(campuses.filter((u) => u.campus_id !== id));
+      toast.success("Xóa thành công");
     } catch (error) {
       toast.error("Error deleting Campus: " + error.message);
     }
@@ -59,20 +63,22 @@ const Campus = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="bg-white shadow-md rounded-md p-4">
-        <h1 className="text-3xl font-bold mb-2">Campuses</h1>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleAddClick}
-        >
-          Add Campus
-        </button>
+        <h1 className="text-3xl font-bold mb-2">Cơ sở</h1>
+        {isAdmin && (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleAddClick}
+          >
+            Thêm cơ sở
+          </button>
+        )}
         <table className="table-auto w-full mt-4">
           <thead>
             <tr>
               <th className="px-4 py-2">ID</th>
-              <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Address</th>
-              <th className="px-4 py-2">Action</th>
+              <th className="px-4 py-2">Tên</th>
+              <th className="px-4 py-2">Địa chỉ</th>
+              {isAdmin && <th className="px-4 py-2"></th>}
             </tr>
           </thead>
           <tbody>
@@ -81,20 +87,22 @@ const Campus = () => {
                 <td className="px-4 py-2">{Campus.campus_id}</td>
                 <td className="px-4 py-2">{Campus.campus_name}</td>
                 <td className="px-4 py-2">{Campus.campus_address}</td>
-                <td className="px-4 py-2">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleEditClick(Campus)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleDeleteClick(Campus.campus_id)}
-                  >
-                    Delete
-                  </button>
-                </td>
+                {isAdmin && (
+                  <td className="px-4 py-2">
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      onClick={() => handleEditClick(Campus)}
+                    >
+                      Sửa
+                    </button>
+                    <button
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      onClick={() => handleDeleteClick(Campus.campus_id)}
+                    >
+                      Xóa
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

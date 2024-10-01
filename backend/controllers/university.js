@@ -21,13 +21,19 @@ module.exports = {
     res.json(universities);
   },
   createUniversity: async (req, res) => {
-    const university = await universityService.createUniversity(req.body);
+    const logoBuffer = req.file ? req.file.buffer : null; // Get the logo file buffer
+    const university = await universityService.createUniversity(
+      req.body,
+      logoBuffer
+    );
     res.json(university);
   },
   updateUniversity: async (req, res) => {
+    const logoBuffer = req.file ? req.file.buffer : null; // Get the logo file buffer
     const university = await universityService.updateUniversity(
-      req.params.id,
-      req.body
+      req.body.id,
+      req.body,
+      logoBuffer
     );
     res.json(university);
   },

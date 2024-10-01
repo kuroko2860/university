@@ -16,6 +16,22 @@ async function createSearch(search) {
   }
 }
 
+async function deleteSearchesByUniversityId(university_id) {
+  try {
+    let pool = await poolPromise;
+    let result = await pool
+      .request()
+      .query(
+        "DELETE FROM university_searches WHERE university_id = " + university_id
+      );
+    return result;
+  } catch (error) {
+    console.error("Error deleting searches: ", error);
+    return null;
+  }
+}
+
 module.exports = {
   createSearch,
+  deleteSearchesByUniversityId,
 };

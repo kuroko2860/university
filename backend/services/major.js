@@ -50,11 +50,10 @@ async function createMajor(university_id, major) {
     let result = await pool
       .request()
       .input("major_name", sql.NVarChar, major.major_name)
-      .input("group_id", sql.Int, major.group_id)
       .input("major_quota", sql.Int, major.major_quota)
       .input("university_id", sql.Int, university_id)
       .query(
-        "INSERT INTO majors (major_name, group_id, major_quota, university_id) VALUES (@major_name, @group_id, @major_quota, @university_id)"
+        "INSERT INTO majors (major_name, major_quota, university_id) VALUES (@major_name, @major_quota, @university_id)"
       );
     return result;
   } catch (error) {
@@ -69,12 +68,11 @@ async function updateMajor(university_id, id, major) {
     let result = await pool
       .request()
       .input("major_name", sql.NVarChar, major.major_name)
-      .input("group_id", sql.Int, major.group_id)
       .input("major_quota", sql.Int, major.major_quota)
       .input("university_id", sql.Int, university_id)
       .input("id", sql.Int, id)
       .query(
-        "UPDATE majors SET major_name = @major_name, group_id = @group_id, major_quota = @major_quota WHERE major_id = @id"
+        "UPDATE majors SET major_name = @major_name, major_quota = @major_quota WHERE major_id = @id"
       );
     console.log(result, major);
     return result;

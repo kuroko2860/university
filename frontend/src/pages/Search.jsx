@@ -46,13 +46,13 @@ function Search() {
       <form className="px-12 py-8" onSubmit={handleSubmit}>
         <div className="flex justify-between items-center space-y-2">
           <label className="text-sm font-medium text-gray-700">
-            Majors:
+            Chuyên ngành:
             <select
               value={searchMajor}
               onChange={(e) => setSearchMajor(e.target.value)}
               className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
             >
-              <option value="">Select major</option>
+              <option value="">Chọn chuyên ngành</option>
               {majors &&
                 majors.map(({ major_name }) => (
                   <option key={major_name} value={major_name}>
@@ -66,7 +66,7 @@ function Search() {
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-          Search
+          Tìm kiếm
         </button>
       </form>
       <Universities universities={universities} searchMajor={searchMajor} />
@@ -128,11 +128,11 @@ const Universities = ({ universities, searchMajor }) => {
       <thead>
         <tr>
           <th className="px-4 py-2">ID</th>
-          <th className="px-4 py-2">Name</th>
-          <th className="px-4 py-2">Phone</th>
+          <th className="px-4 py-2">Tên trường</th>
+          <th className="px-4 py-2">SĐT</th>
           <th className="px-4 py-2">Fax</th>
           <th className="px-4 py-2">Email</th>
-          <th className="px-4 py-2">Action</th>
+          <th className="px-4 py-2"></th>
         </tr>
       </thead>
       <tbody>
@@ -148,21 +148,21 @@ const Universities = ({ universities, searchMajor }) => {
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 onClick={() => handleDetailsClick(university)}
               >
-                Detail
+                Chi tiết
               </button>
               {!favorList.includes(university.id) ? (
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() => handleLikeClick(university)}
                 >
-                  Like
+                  Thích
                 </button>
               ) : (
                 <button
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() => handleUnlikeClick(university)}
                 >
-                  Unlike
+                  Bỏ thích
                 </button>
               )}
             </td>

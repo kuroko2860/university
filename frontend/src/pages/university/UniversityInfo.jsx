@@ -6,6 +6,19 @@ const UniversityInfo = ({ university }) => {
       borderWidth="1px"
       borderColor="gray.200"
     >
+      {university.logo ? (
+        <img
+          src={university.logo}
+          alt="University Logo"
+          style={{
+            width: "200px",
+            height: "200px",
+            objectFit: "contain",
+          }}
+        />
+      ) : (
+        <p>Logo không khả dụng</p>
+      )}
       <Heading
         as="h2"
         size="lg"
@@ -16,15 +29,14 @@ const UniversityInfo = ({ university }) => {
       </Heading>
       <Text className="text-sm text-gray-600">Id: {university.id}</Text>
       <Text className="text-sm text-gray-600">
-        Address: {university.address}
+        Địa chỉ: {university.address}
       </Text>
-      <Text className="text-sm text-gray-600">Phone: {university.phone}</Text>
+      <Text className="text-sm text-gray-600">SĐT: {university.phone}</Text>
       <Text className="text-sm text-gray-600">Fax: {university.fax}</Text>
       <Text className="text-sm text-gray-600">Email: {university.email}</Text>
       <Text className="text-sm text-gray-600">
         Website: {university.website}
       </Text>
-      <Text className="text-sm text-gray-600">Logo: {university.logo}</Text>
     </Box>
   );
 };

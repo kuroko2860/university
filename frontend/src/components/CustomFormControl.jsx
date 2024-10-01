@@ -19,7 +19,7 @@ function CustomFormControl({
         placeholder={placeholder}
       />
       {errors[registerName] && (
-        <div className={tw`text-xs text-red-600`}>{label} is required</div>
+        <div className={tw`text-xs text-red-600`}>{label} là bắt buộc</div>
       )}
     </FormControl>
   );
