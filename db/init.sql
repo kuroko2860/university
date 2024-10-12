@@ -9,32 +9,32 @@ CREATE TABLE users (
 );
 CREATE TABLE universities (
     id INT PRIMARY KEY,
-    name VARCHAR(255),
-    address VARCHAR(255),
-    phone VARCHAR(20),
-    fax VARCHAR(20),
-    email VARCHAR(100),
-    website VARCHAR(100),
-    logo VBINARY(255)
+    name NVARCHAR(255),
+    address NVARCHAR(255),
+    phone NVARCHAR(20),
+    fax NVARCHAR(20),
+    email NVARCHAR(100),
+    website NVARCHAR(100),
+    logo VARBINARY(MAX)
 );
 CREATE TABLE campuses (
     campus_id INT PRIMARY KEY IDENTITY(1, 1),
-    campus_name VARCHAR(255),
-    campus_address VARCHAR(255),
+    campus_name NVARCHAR(255),
+    campus_address NVARCHAR(255),
     university_id INT,
     FOREIGN KEY (university_id) REFERENCES universities(id)
 );
 CREATE TABLE majors (
     major_id INT PRIMARY KEY IDENTITY(1, 1),
-    major_name VARCHAR(255),
+    major_name NVARCHAR(255),
     major_quota INT,
     university_id INT,
     FOREIGN KEY (university_id) REFERENCES universities(id)
 );
 CREATE TABLE administrative_boards (
     board_id INT PRIMARY KEY IDENTITY(1, 1),
-    board_name VARCHAR(255),
-    board_position VARCHAR(100),
+    board_name NVARCHAR(255),
+    board_position NVARCHAR(100),
     university_id INT,
     FOREIGN KEY (university_id) REFERENCES universities(id)
 );
@@ -46,13 +46,13 @@ CREATE TABLE university_searches (
 );
 create table major_searches (
     search_id INT PRIMARY KEY IDENTITY(1, 1),
-    major_name VARCHAR(255),
+    major_name NVARCHAR(255),
     search_time DATETIME DEFAULT GETDATE(),
 );
 CREATE TABLE favorite_lists (
     list_id INT PRIMARY KEY IDENTITY(1, 1),
     user_id INT,
-    major_name VARCHAR(255),
+    major_name NVARCHAR(255),
     university_id INT,
     FOREIGN KEY (university_id) REFERENCES universities(id),
     FOREIGN KEY (user_id) REFERENCES users(id)

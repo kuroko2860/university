@@ -20,7 +20,7 @@ function Login() {
       const decoded = jwtDecode(response.data.token);
       localStorage.setItem("user_id", decoded.userId);
       localStorage.setItem("user_role", decoded.role);
-      navigate("/");
+      navigate(decoded.role === "admin" ? "/admin" : "/");
       toast.success("Đăng nhập thành công");
     } catch (error) {
       console.error("Error logging in:", error);

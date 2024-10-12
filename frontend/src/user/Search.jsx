@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "../config/axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Search() {
+  const major = new URLSearchParams(window.location.search).get("major");
   const [universities, setUniversities] = useState([]);
   const [majors, setMajors] = useState([]);
-  const [searchMajor, setSearchMajor] = useState("");
+  const [searchMajor, setSearchMajor] = useState(major);
 
   const fetchMajors = async () => {
     try {
@@ -36,9 +38,30 @@ function Search() {
       console.error("Error searching universities: ", error);
     }
   };
+  const fetchUniversities = async () => {
+    try {
+      const response = await axios.get("/university");
+      setUniversities(response.data);
+    } catch (error) {
+      toast.error("Error fetching universities: " + error.message);
+    }
+  };
+  const handleNavigate = async () => {
+    try {
+      await addSearchMajor(searchMajor);
+      const response = await axios.get(`/university/major/${searchMajor}`);
+      setUniversities(response.data);
+    } catch (error) {
+      console.error("Error searching universities: ", error);
+    }
+  };
 
   useEffect(() => {
     fetchMajors();
+    fetchUniversities();
+    if (major) {
+      handleNavigate();
+    }
   }, []);
 
   return (
@@ -49,6 +72,7 @@ function Search() {
             Chuyên ngành:
             <select
               value={searchMajor}
+              defaultValue={searchMajor}
               onChange={(e) => setSearchMajor(e.target.value)}
               className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
             >
@@ -103,7 +127,12 @@ const Universities = ({ universities, searchMajor }) => {
     addSearchUniversity(university.id);
     navigate(`/university/${university.id}`);
   };
-  const handleLikeClick = async (university) => {
+  const handleLikeClick = async (e, university) => {
+    e.stopPropagation();
+    if (!user_id) {
+      navigate("/login");
+      return;
+    }
     try {
       await axios.post("/favorite_list", {
         user_id,
@@ -115,7 +144,12 @@ const Universities = ({ universities, searchMajor }) => {
       console.error("Error liking university: ", error);
     }
   };
-  const handleUnlikeClick = async (university) => {
+  const handleUnlikeClick = async (e, university) => {
+    e.stopPropagation();
+    if (!user_id) {
+      navigate("/login");
+      return;
+    }
     try {
       await axios.delete(`/favorite_list/${user_id}/${university.id}`);
       fetchFavorList();
@@ -124,53 +158,82 @@ const Universities = ({ universities, searchMajor }) => {
     }
   };
   return (
-    <table className="table-auto w-full mt-4">
-      <thead>
-        <tr>
-          <th className="px-4 py-2">ID</th>
-          <th className="px-4 py-2">Tên trường</th>
-          <th className="px-4 py-2">SĐT</th>
-          <th className="px-4 py-2">Fax</th>
-          <th className="px-4 py-2">Email</th>
-          <th className="px-4 py-2"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {universities.map((university) => (
-          <tr key={university.id}>
-            <td className="px-4 py-2">{university.id}</td>
-            <td className="px-4 py-2">{university.name}</td>
-            <td className="px-4 py-2">{university.phone}</td>
-            <td className="px-4 py-2">{university.fax}</td>
-            <td className="px-4 py-2">{university.email}</td>
-            <td className="px-4 py-2">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16">
+      {universities.map((university) => (
+        <div
+          key={university.id}
+          className="bg-white shadow-lg shadow-gray-300 border border-gray-300 rounded-md p-4 cursor-pointer hover:scale-105 transition-all duration-300"
+          onClick={() => handleDetailsClick(university)}
+        >
+          {university.logo ? (
+            <img
+              src={university.logo}
+              alt="University Logo"
+              style={{
+                width: "100%",
+                height: "auto",
+                objectFit: "contain",
+              }}
+            />
+          ) : (
+            <p>Logo không khả dụng</p>
+          )}
+          <p className="font-medium leading-tight text-center mt-4">
+            {university.name}
+          </p>
+          <div className="flex justify-center">
+            {!favorList.includes(university.id) ? (
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => handleDetailsClick(university)}
+                onClick={(e) => handleLikeClick(e, university)}
               >
-                Chi tiết
+                Thích
               </button>
-              {!favorList.includes(university.id) ? (
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => handleLikeClick(university)}
-                >
-                  Thích
-                </button>
-              ) : (
-                <button
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => handleUnlikeClick(university)}
-                >
-                  Bỏ thích
-                </button>
-              )}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+            ) : (
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                onClick={(e) => handleUnlikeClick(e, university)}
+              >
+                Bỏ thích
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
   );
 };
 
 export default Search;
+{
+  /* <tr key={university.id}>
+          <td className="px-4 py-2">{university.id}</td>
+          <td className="px-4 py-2">{university.name}</td>
+          <td className="px-4 py-2">{university.phone}</td>
+          <td className="px-4 py-2">{university.fax}</td>
+          <td className="px-4 py-2">{university.email}</td>
+          <td className="px-4 py-2">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => handleDetailsClick(university)}
+            >
+              Chi tiết
+            </button>
+            {!favorList.includes(university.id) ? (
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => handleLikeClick(university)}
+              >
+                Thích
+              </button>
+            ) : (
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => handleUnlikeClick(university)}
+              >
+                Bỏ thích
+              </button>
+            )}
+          </td>
+        </tr> */
+}

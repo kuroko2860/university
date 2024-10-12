@@ -20,7 +20,21 @@ async function getAllUniversitiesByUserId(user_id) {
         INNER JOIN universities ON favorite_lists.university_id = universities.id
         WHERE favorite_lists.user_id = @user_id
       `);
-    return result.recordset;
+    let res = result.recordset.map((university) => {
+      const base64Logo = Buffer.from(university.logo).toString("base64");
+      return {
+        id: university.id,
+        name: university.name,
+        address: university.address,
+        phone: university.phone,
+        fax: university.fax,
+        email: university.email,
+        website: university.website,
+        logo: `data:image/png;base64,${base64Logo}`,
+      };
+    });
+    return res;
+    // return result.recordset;
   } catch (error) {
     console.error("Error fetching all universities by user_id: ", error);
     return [];

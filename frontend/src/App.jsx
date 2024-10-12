@@ -6,43 +6,51 @@ import PrivateRoute from "./route/PrivateRoute";
 import Layout from "./layout/Layout";
 import Stats from "./pages/stats/Stats";
 import University from "./pages/university/University";
-import Search from "./pages/Search";
+import Search from "./user/Search";
 import UniversityDetail from "./pages/university/UniversityDetail";
-import MajorGroup from "./pages/major_group/MajorGroup";
-import Favourite from "./pages/Favourite";
 import PopularUniversity from "./pages/stats/PopularUniversity";
 import PopularMajor from "./pages/stats/PopularMajor";
 import MajorRate from "./pages/stats/MajorRate";
+import UserLayout from "./user/layout/Layout";
+import UserUniversity from "./user/university/University";
+import UserFavourite from "./user/Favourite";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<UserLayout />}>
+          <Route path="" element={<UserUniversity />} />
           <Route
-            path=""
+            path="university/:id"
             element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <UniversityDetail />
+              // </PrivateRoute>
+            }
+          ></Route>
+          <Route
+            path="search"
+            element={
+              // <PrivateRoute>
+              <Search />
+              // </PrivateRoute>
             }
           />
+          <Route path="favourite" element={<UserFavourite />} />
+        </Route>
+        <Route path="/admin" element={<Layout />}>
           <Route
-            path="university"
+            path=""
             element={
               <PrivateRoute>
                 <University />
               </PrivateRoute>
             }
           />
-          <Route
-            path="major-group"
-            element={
-              <PrivateRoute>
-                <MajorGroup />
-              </PrivateRoute>
-            }
-          />
+
           <Route
             path="university/:id"
             element={
@@ -51,23 +59,6 @@ function App() {
               </PrivateRoute>
             }
           ></Route>
-          <Route
-            path="search"
-            element={
-              <PrivateRoute>
-                <Search />
-              </PrivateRoute>
-            }
-          />
-
-          <Route
-            path="favourite"
-            element={
-              <PrivateRoute>
-                <Favourite />
-              </PrivateRoute>
-            }
-          />
 
           <Route
             path="statistics"
@@ -82,8 +73,6 @@ function App() {
           <Route path="popular-majors" element={<PopularMajor />} />
           <Route path="major-rate" element={<MajorRate />} />
 
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
           <Route path="*" element={<Home />} />
         </Route>
       </Routes>

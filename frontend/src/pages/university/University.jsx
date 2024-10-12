@@ -62,7 +62,7 @@ const University = () => {
 
   const handleDetailsClick = (university) => {
     addSearchUniversity(university.id);
-    navigate(`/university/${university.id}`);
+    navigate(`/admin/university/${university.id}`);
   };
 
   const handleSubmit = async (university) => {
