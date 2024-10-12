@@ -58,20 +58,20 @@ const UserUniversity = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="p-4 bg-slate-400">
-        <h3 className="text-3xl font-bold mb-3 text-center">
+      <div className="p-4 bg-slate-300 border border-gray-300 rounded-2xl py-8">
+        <h3 className="text-3xl font-bold mb  mb-2 text-center text-gray-700">
           TÌM KIẾM TRƯỜNG HỌC TỐT NHẤT CHO BẠN
         </h3>
-        <p className="text-center">
+        <p className="text-center text-gray-500">
           Nhanh chóng - Chính xác - Đầy đủ những thông tin mà bạn đang cần tìm
           kiếm.
         </p>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center mt-6">
           <div className="flex justify-between items-center space-y-2">
             <select
               value={searchMajor}
               onChange={(e) => setSearchMajor(e.target.value)}
-              className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+              className="mt-2 block w-full p-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
             >
               <option value="">Chọn chuyên ngành</option>
               {majors &&
@@ -84,7 +84,7 @@ const UserUniversity = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
             onClick={handleSubmit}
           >
             Tìm kiếm
@@ -92,9 +92,11 @@ const UserUniversity = () => {
         </div>
       </div>
       <div className=" p-4">
-        <h1 className="text-3xl font-bold mb-6 text-center">Top trường học</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-600">
+          Top trường học
+        </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16">
-          {universities.map((university) => (
+          {universities.slice(0, 4).map((university) => (
             <UniversityCard
               key={university.id}
               university={university}
@@ -110,7 +112,7 @@ const UserUniversity = () => {
 export const UniversityCard = ({ university, handleDetailsClick }) => {
   return (
     <div
-      className="bg-white shadow-lg shadow-gray-300 border border-gray-300 rounded-md p-4 cursor-pointer hover:scale-105 transition-all duration-300"
+      className="bg-white shadow-lg shadow-gray-300 flex flex-col justify-center items-center border border-gray-300 rounded-md p-4 cursor-pointer hover:scale-105 transition-all duration-300"
       onClick={() => handleDetailsClick(university)}
     >
       {university.logo ? (
@@ -118,15 +120,16 @@ export const UniversityCard = ({ university, handleDetailsClick }) => {
           src={university.logo}
           alt="University Logo"
           style={{
-            width: "100%",
+            width: "200px",
             height: "auto",
             objectFit: "contain",
+            marginBottom: "8px",
           }}
         />
       ) : (
         <p>Logo không khả dụng</p>
       )}
-      <p className="font-medium leading-tight text-center mt-4">
+      <p className="font-bold text-gray-700 leading-tight text-center mt-4">
         {university.name}
       </p>
     </div>

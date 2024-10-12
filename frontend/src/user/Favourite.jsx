@@ -109,7 +109,7 @@ function UserFavourite() {
               <p className="text-gray-600 mb-2">Fax: {university.fax}</p>
               <p className="text-gray-600 mb-2">Email: {university.email}</p>
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-6"
                 onClick={() => handleDetailsClick(university)}
               >
                 Chi tiết

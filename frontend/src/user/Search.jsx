@@ -7,7 +7,10 @@ function Search() {
   const major = new URLSearchParams(window.location.search).get("major");
   const [universities, setUniversities] = useState([]);
   const [majors, setMajors] = useState([]);
-  const [searchMajor, setSearchMajor] = useState(major);
+  const [searchMajor, setSearchMajor] = useState(major || "all");
+  const [searchQueryByAddress, setSearchQueryByAddress] = useState("");
+  const [searchQueryByName, setSearchQueryByName] = useState("");
+  const [searchQueryByPhone, setSearchQueryByPhone] = useState("");
 
   const fetchMajors = async () => {
     try {
@@ -33,7 +36,15 @@ function Search() {
     try {
       await addSearchMajor(searchMajor);
       const response = await axios.get(`/university/major/${searchMajor}`);
-      setUniversities(response.data);
+      setUniversities(
+        response.data.filter(
+          (university) =>
+            university.name.includes(searchQueryByName) &&
+            university.address.includes(searchQueryByAddress) &&
+            university.phone.includes(searchQueryByPhone)
+        )
+      );
+      console.log(response.data);
     } catch (error) {
       console.error("Error searching universities: ", error);
     }
@@ -66,17 +77,20 @@ function Search() {
 
   return (
     <div>
-      <form className="px-12 py-8" onSubmit={handleSubmit}>
+      <form
+        className="px-12 py-8 bg-gray-200 m-8 border border-gray-300 border-r-2 rounded-md shadow-md"
+        onSubmit={handleSubmit}
+      >
         <div className="flex justify-between items-center space-y-2">
           <label className="text-sm font-medium text-gray-700">
-            Chuyên ngành:
+            Chuyên ngành
             <select
               value={searchMajor}
               defaultValue={searchMajor}
               onChange={(e) => setSearchMajor(e.target.value)}
               className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
             >
-              <option value="">Chọn chuyên ngành</option>
+              <option value="all">Chọn chuyên ngành</option>
               {majors &&
                 majors.map(({ major_name }) => (
                   <option key={major_name} value={major_name}>
@@ -86,9 +100,39 @@ function Search() {
             </select>
           </label>
         </div>
+        <br />
+        <div className="flex justify-between items-center space-y-2">
+          <label className="text-sm font-medium text-gray-700">
+            Tên trường
+            <input
+              type="text"
+              value={searchQueryByName}
+              onChange={(e) => setSearchQueryByName(e.target.value)}
+              className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            />
+          </label>
+          <label className="text-sm font-medium text-gray-700">
+            Số điện thoại
+            <input
+              type="text"
+              value={searchQueryByPhone}
+              onChange={(e) => setSearchQueryByPhone(e.target.value)}
+              className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            />
+          </label>
+          <label className="text-sm font-medium text-gray-700">
+            Địa chỉ
+            <input
+              type="text"
+              value={searchQueryByAddress}
+              onChange={(e) => setSearchQueryByAddress(e.target.value)}
+              className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+            />
+          </label>
+        </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
         >
           Tìm kiếm
         </button>
@@ -158,11 +202,11 @@ const Universities = ({ universities, searchMajor }) => {
     }
   };
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 px-[150px]">
       {universities.map((university) => (
         <div
           key={university.id}
-          className="bg-white shadow-lg shadow-gray-300 border border-gray-300 rounded-md p-4 cursor-pointer hover:scale-105 transition-all duration-300"
+          className="bg-white p-4 shadow-lg flex justify-center items-center flex-col shadow-gray-300 border border-gray-300 rounded-md  cursor-pointer hover:scale-105 transition-all duration-300"
           onClick={() => handleDetailsClick(university)}
         >
           {university.logo ? (
@@ -170,7 +214,7 @@ const Universities = ({ universities, searchMajor }) => {
               src={university.logo}
               alt="University Logo"
               style={{
-                width: "100%",
+                width: "200px",
                 height: "auto",
                 objectFit: "contain",
               }}
@@ -181,7 +225,7 @@ const Universities = ({ universities, searchMajor }) => {
           <p className="font-medium leading-tight text-center mt-4">
             {university.name}
           </p>
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-4">
             {!favorList.includes(university.id) ? (
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -205,35 +249,3 @@ const Universities = ({ universities, searchMajor }) => {
 };
 
 export default Search;
-{
-  /* <tr key={university.id}>
-          <td className="px-4 py-2">{university.id}</td>
-          <td className="px-4 py-2">{university.name}</td>
-          <td className="px-4 py-2">{university.phone}</td>
-          <td className="px-4 py-2">{university.fax}</td>
-          <td className="px-4 py-2">{university.email}</td>
-          <td className="px-4 py-2">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => handleDetailsClick(university)}
-            >
-              Chi tiết
-            </button>
-            {!favorList.includes(university.id) ? (
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => handleLikeClick(university)}
-              >
-                Thích
-              </button>
-            ) : (
-              <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => handleUnlikeClick(university)}
-              >
-                Bỏ thích
-              </button>
-            )}
-          </td>
-        </tr> */
-}

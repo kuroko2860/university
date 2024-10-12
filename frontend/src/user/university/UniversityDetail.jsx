@@ -1,4 +1,3 @@
-import { VStack } from "@chakra-ui/react";
 import UniversityInfo from "./UniversityInfo";
 import Campus from "../campus/Campus";
 import { useParams } from "react-router-dom";
@@ -8,7 +7,7 @@ import { toast } from "react-toastify";
 import Major from "../major/Major";
 import AdministrativeBoard from "../admin_board/AdministrativeBoard";
 
-const UniversityDetail = () => {
+const UserUniversityDetail = () => {
   const { id: universityId } = useParams();
   const [university, setUniversity] = useState(null);
 
@@ -27,13 +26,16 @@ const UniversityDetail = () => {
   if (!university) return null;
 
   return (
-    <VStack spacing={4} align="stretch">
+    <div className="container mx-auto p-8">
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        Thông tin chi tiết
+      </h2>
       <UniversityInfo university={university} />
-      <Campus />
       <Major />
       <AdministrativeBoard />
-    </VStack>
+      <Campus />
+    </div>
   );
 };
 
-export default UniversityDetail;
+export default UserUniversityDetail;

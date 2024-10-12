@@ -61,20 +61,20 @@ function PopularUniversity() {
       >
         Tải xuống và in
       </button>
-      <table className="table-auto w-full mt-4">
+      <table className="table-auto w-full mt-4 shadow-md rounded-md border border-gray-300 text-center">
         <thead>
-          <tr>
-            <th className="px-4 py-2">ID</th>
-            <th className="px-4 py-2">Tên trường</th>
-            <th className="px-4 py-2">SĐT</th>
-            <th className="px-4 py-2">Fax</th>
-            <th className="px-4 py-2">Email</th>
-            <th className="px-4 py-2">Số lượt tìm kiếm</th>
+          <tr className="bg-gray-400">
+            <th className="px-4 py-2 font-semibold">ID</th>
+            <th className="px-4 py-2 font-semibold">Tên trường</th>
+            <th className="px-4 py-2 font-semibold">SĐT</th>
+            <th className="px-4 py-2 font-semibold">Fax</th>
+            <th className="px-4 py-2 font-semibold">Email</th>
+            <th className="px-4 py-2 font-semibold">Số lượt tìm kiếm</th>
           </tr>
         </thead>
         <tbody>
           {popularUniversities.map((university) => (
-            <tr key={university.id}>
+            <tr key={university.id} className="hover:bg-gray-100">
               <td className="px-4 py-2">{university.id}</td>
               <td className="px-4 py-2">{university.name}</td>
               <td className="px-4 py-2">{university.phone}</td>

@@ -72,13 +72,15 @@ const Campus = () => {
             Thêm cơ sở
           </button>
         )}
-        <table className="table-auto w-full mt-4 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <table className="table-auto w-full mt-4 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border-separate border-spacing-y-2">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="px-4 py-2">ID</th>
-              <th className="px-4 py-2">Tên</th>
-              <th className="px-4 py-2">Địa chỉ</th>
-              {isAdmin && <th className="px-4 py-2"></th>}
+              <th className="px-4 py-2 border-b border-gray-300">ID</th>
+              <th className="px-4 py-2 border-b border-gray-300">Tên</th>
+              <th className="px-4 py-2 border-b border-gray-300">Địa chỉ</th>
+              {isAdmin && (
+                <th className="px-4 py-2 border-b border-gray-300"></th>
+              )}
             </tr>
           </thead>
           <tbody className="bg-white dark:bg-gray-800">
@@ -86,17 +88,22 @@ const Campus = () => {
               <tr
                 key={Campus.campus_id}
                 className={
-                  "hover:bg-gray-100 dark:hover:bg-gray-700 " + (index % 2) ===
-                  0
-                    ? "bg-white dark:bg-gray-800"
-                    : "bg-gray-50 dark:bg-gray-700"
+                  index % 2 === 0
+                    ? "bg-gray-100 dark:bg-gray-700"
+                    : "bg-white dark:bg-gray-800"
                 }
               >
-                <td className="px-4 py-2">{Campus.campus_id}</td>
-                <td className="px-4 py-2">{Campus.campus_name}</td>
-                <td className="px-4 py-2">{Campus.campus_address}</td>
+                <td className="px-4 py-2  border-gray-300">
+                  {Campus.campus_id}
+                </td>
+                <td className="px-4 py-2  border-gray-300">
+                  {Campus.campus_name}
+                </td>
+                <td className="px-4 py-2  border-gray-300">
+                  {Campus.campus_address}
+                </td>
                 {isAdmin && (
-                  <td className="px-4 py-2 flex gap-2">
+                  <td className="px-4 py-2  border-gray-300">
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                       onClick={() => handleEditClick(Campus)}

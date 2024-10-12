@@ -7,18 +7,18 @@ function Stats() {
     // Import useNavigate hook at the top of the file
 
     // Navigate to the Stock page
-    navigate("/popular-universities");
+    navigate("/admin/popular-universities");
   };
 
   const handleExpiredClick = () => {
     // Logic to show expired medicines
     // Navigate to the Expired page
-    navigate("/popular-majors");
+    navigate("/admin/popular-majors");
   };
 
   const handleExpiringSoonClick = () => {
     // Logic to show medicines expiring soon
-    navigate("/major-rate");
+    navigate("/admin/major-rate");
   };
 
   return (

@@ -14,6 +14,7 @@ import MajorRate from "./pages/stats/MajorRate";
 import UserLayout from "./user/layout/Layout";
 import UserUniversity from "./user/university/University";
 import UserFavourite from "./user/Favourite";
+import UserUniversityDetail from "./user/university/UniversityDetail";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
             path="university/:id"
             element={
               // <PrivateRoute>
-              <UniversityDetail />
+              <UserUniversityDetail />
               // </PrivateRoute>
             }
           ></Route>

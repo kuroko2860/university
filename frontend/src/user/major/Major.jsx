@@ -62,8 +62,8 @@ const Major = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="bg-white shadow-md rounded-md p-4">
+    <div className="container mx-auto p-4 ">
+      <div className="bg-white shadow-md rounded-md p-4 border border-gray-300">
         <h1 className="text-3xl font-bold mb-2">Ngành học</h1>
         {isAdmin && (
           <button
@@ -73,30 +73,27 @@ const Major = () => {
             Thêm ngành
           </button>
         )}
-        <table className="table-auto w-full mt-4 overflow-x-auto">
-          <thead className="bg-gray-100">
+        <table className="table-auto w-full mt-4 shadow-md rounded-md border border-gray-300">
+          <thead className="bg-gray-100 ">
             <tr>
-              <th className="px-4 py-2">ID</th>
-              <th className="px-4 py-2">Tên ngành</th>
-              <th className="px-4 py-2">Chỉ tiêu</th>
+              <th className="px-4 py-2 text-center">ID</th>
+              <th className="px-4 py-2 text-center">Tên ngành</th>
+              <th className="px-4 py-2 text-center">Chỉ tiêu</th>
               {isAdmin && <th className="px-4 py-2"></th>}
             </tr>
           </thead>
-          <tbody className="bg-white text-center">
+          <tbody>
             {majors.map((Major) => (
-              <tr key={Major.major_id} className="hover:bg-gray-200">
-                <td className="px-4 py-2 border-t-2 border-gray-300">
-                  {Major.major_id}
-                </td>
-                <td className="px-4 py-2 border-t-2 border-gray-300">
-                  {Major.major_name}
-                </td>
-                {/* <td className="px-4 py-2 border-t-2 border-gray-300">{majorGroups[Major.group_id]}</td> */}
-                <td className="px-4 py-2 border-t-2 border-gray-300">
-                  {Major.major_quota}
-                </td>
+              <tr
+                key={Major.major_id}
+                className="text-center hover:bg-gray-200"
+              >
+                <td className="px-4 py-2">{Major.major_id}</td>
+                <td className="px-4 py-2">{Major.major_name}</td>
+                {/* <td className="px-4 py-2">{majorGroups[Major.group_id]}</td> */}
+                <td className="px-4 py-2">{Major.major_quota}</td>
                 {isAdmin && (
-                  <td className="px-4 py-2 border-t-2 border-gray-300 flex gap-2">
+                  <td className="px-4 py-2">
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                       onClick={() => handleEditClick(Major)}

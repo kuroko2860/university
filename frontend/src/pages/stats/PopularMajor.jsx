@@ -51,20 +51,20 @@ function PopularMajor() {
       >
         Tải xuống và in
       </button>
-      <table className="table-auto w-full mt-4">
-        <thead>
+      <table className="table-auto w-full mt-4 shadow-lg rounded-lg overflow-hidden text-center">
+        <thead className="bg-gray-300">
           <tr>
-            <th className="px-4 py-2">ID</th>
-            <th className="px-4 py-2">Tên ngành</th>
-            <th className="px-4 py-2">Số lượt tìm kiếm</th>
+            <th className="px-6 py-3">ID</th>
+            <th className="px-6 py-3">Tên ngành</th>
+            <th className="px-6 py-3">Số lượt tìm kiếm</th>
           </tr>
         </thead>
         <tbody>
           {popularMajors.map((major) => (
-            <tr key={major.id}>
-              <td className="px-4 py-2">{major.major_id}</td>
-              <td className="px-4 py-2">{major.major_name}</td>
-              <td className="px-4 py-2">{major.search_count}</td>
+            <tr key={major.id} className="odd:bg-white even:bg-gray-100">
+              <td className="px-6 py-4">{major.major_id}</td>
+              <td className="px-6 py-4">{major.major_name}</td>
+              <td className="px-6 py-4">{major.search_count}</td>
             </tr>
           ))}
         </tbody>

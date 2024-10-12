@@ -12,7 +12,7 @@ const Layout = () => {
     <div className="flex">
       <div className="w-1/6 bg-gray-800 h-screen fixed">
         <div className="flex items-center justify-center h-16 text-white text-xl font-bold">
-          Quản lý trường học
+          MANUNIE ADMIN
         </div>
         <ul className="mt-4">
           <li>
@@ -32,10 +32,10 @@ const Layout = () => {
               Thống kê
             </a>
           </li>
-
+          <div className="w-full h-[2px] bg-gray-600 my-3"></div>
           <li
             onClick={handleLogout}
-            className="text-white hover:text-gray-300 block py-2 px-4 cursor-pointer"
+            className="text-red-500 hover:text-red-700 block py-2 px-4 cursor-pointer"
           >
             Đăng xuất
           </li>

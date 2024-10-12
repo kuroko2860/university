@@ -116,12 +116,17 @@ async function deleteUniversity(id) {
 async function getUniversityByMajorName(major_name) {
   try {
     let pool = await poolPromise;
-    let result = await pool
-      .request()
-      .input("major_name", sql.NVarChar, major_name)
-      .query(
-        "SELECT * FROM universities WHERE id IN (SELECT university_id FROM majors WHERE major_name = @major_name)"
-      );
+    let result;
+    if (major_name === "all") {
+      result = await pool.request().query("SELECT * FROM universities");
+    } else {
+      result = await pool
+        .request()
+        .input("major_name", sql.NVarChar, major_name)
+        .query(
+          "SELECT * FROM universities WHERE id IN (SELECT university_id FROM majors WHERE major_name = @major_name)"
+        );
+    }
     let res = result.recordset.map((university) => {
       const base64Logo = Buffer.from(university.logo).toString("base64");
       return {

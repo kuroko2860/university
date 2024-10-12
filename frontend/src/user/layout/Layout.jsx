@@ -15,25 +15,35 @@ const UserLayout = () => {
     <div>
       <nav className="bg-gray-800 h-16 flex justify-between items-center px-8">
         <ul className="flex">
-          <li className="mr-6">
-            <a href="/" className="text-white hover:text-gray-300">
-              Trang chủ
-            </a>
-          </li>
-          <li className="mr-6">
-            <a href="/search" className="text-white hover:text-gray-300 ">
-              Tìm kiếm
-            </a>
-          </li>
-
-          {user_id && (
+          <ul className="flex">
             <li className="mr-6">
-              <a href="/favourite" className="text-white hover:text-gray-300">
-                Yêu thích
+              <a href="/" className="text-white hover:text-gray-300 text-2xl">
+                MANUNIE
               </a>
             </li>
-          )}
+          </ul>
+          <ul className="flex">
+            <li className="mr-6 flex justify-center items-center">
+              <a href="/" className="text-white hover:text-gray-300">
+                Trang chủ
+              </a>
+            </li>
+            <li className="mr-6 flex justify-center items-center">
+              <a href="/search" className="text-white hover:text-gray-300 ">
+                Tìm kiếm
+              </a>
+            </li>
+
+            {user_id && (
+              <li className="mr-6 flex justify-center items-center">
+                <a href="/favourite" className="text-white hover:text-gray-300">
+                  Yêu thích
+                </a>
+              </li>
+            )}
+          </ul>
         </ul>
+
         {user_id ? (
           <ul className="flex">
             <li className="mr-6">
@@ -63,8 +73,8 @@ const UserLayout = () => {
       <div className="min-h-screen">
         <Outlet />
       </div>
-      <footer className="bg-gray-800 w-full py-8 text-center ">
-        <p className="text-white">© 2023. All rights reserved.</p>
+      <footer className="bg-gray-800 w-full py-4 text-center ">
+        <p className="text-white">© 2024. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -71,7 +71,7 @@ const AdministrativeBoard = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="bg-white shadow-md rounded-md p-4">
+      <div className="bg-white shadow-md rounded-md p-4 border border-gray-300">
         <h1 className="text-3xl font-bold mb-2">Ban giám hiệu</h1>
         {isAdmin && (
           <button
@@ -81,20 +81,22 @@ const AdministrativeBoard = () => {
             Thêm ban giám hiệu
           </button>
         )}
-        <table className="table-auto w-full mt-4 shadow-lg rounded-lg overflow-hidden text-center">
-          <thead className="bg-gray-100 text-center">
+        <table className="table-auto w-full mt-4 text-center">
+          <thead className="bg-gray-100">
             <tr>
-              <th className="px-4 py-2 text-center">ID</th>
-              <th className="px-4 py-2 text-center">Tên</th>
-              <th className="px-4 py-2 text-center">Vị trí</th>
-              {isAdmin && <th className="px-4 py-2"></th>}
+              <th className="px-4 py-2 border-b border-gray-300">ID</th>
+              <th className="px-4 py-2 border-b border-gray-300">Tên</th>
+              <th className="px-4 py-2 border-b border-gray-300">Vị trí</th>
+              {isAdmin && (
+                <th className="px-4 py-2 border-b border-gray-300"></th>
+              )}
             </tr>
           </thead>
           <tbody>
             {administrativeBoards.map((AdministrativeBoard) => (
               <tr
                 key={AdministrativeBoard.administrativeBoard_id}
-                className="hover:bg-gray-100"
+                className="border-b border-gray-300 hover:bg-gray-200"
               >
                 <td className="px-4 py-2">{AdministrativeBoard.board_id}</td>
                 <td className="px-4 py-2">{AdministrativeBoard.board_name}</td>
@@ -102,7 +104,7 @@ const AdministrativeBoard = () => {
                   {AdministrativeBoard.board_position}
                 </td>
                 {isAdmin && (
-                  <td className="px-4 py-2 flex gap-2">
+                  <td className="px-4 py-2">
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                       onClick={() => handleEditClick(AdministrativeBoard)}

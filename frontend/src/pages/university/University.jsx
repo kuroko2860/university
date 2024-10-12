@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useAdmin from "../../hooks/useRole";
 
 const University = () => {
-  const [searchQueryById, setSearchQueryById] = useState("");
+  const [searchQueryByAddress, setSearchQueryByAddress] = useState("");
   const [searchQueryByName, setSearchQueryByName] = useState("");
   const [searchQueryByPhone, setSearchQueryByPhone] = useState("");
   const [allUniversities, setAllUniversities] = useState([]);
@@ -33,13 +33,13 @@ const University = () => {
     setUniversities(
       allUniversities.filter((university) => {
         return (
-          university.id.toString().includes(searchQueryById) &&
+          university.address.toString().includes(searchQueryByAddress) &&
           university.name.toString().includes(searchQueryByName) &&
           university.phone.toString().includes(searchQueryByPhone)
         );
       })
     );
-  }, [searchQueryById, searchQueryByName, searchQueryByPhone]);
+  }, [searchQueryByAddress, searchQueryByName, searchQueryByPhone]);
 
   const handleAddClick = () => {
     setEditingUniversity(null);
@@ -92,7 +92,7 @@ const University = () => {
       }
       fetchUniversities();
       setShowForm(false);
-      setSearchQueryById("");
+      setSearchQueryByAddress("");
       setSearchQueryByName("");
       setSearchQueryByPhone("");
       toast.success("Thêm thông tin thành công");
@@ -126,16 +126,7 @@ const University = () => {
         <form className="px-12 py-8">
           <div className="flex justify-between items-center space-y-2">
             <label className="text-sm font-medium text-gray-700">
-              ID:
-              <input
-                type="text"
-                value={searchQueryById}
-                onChange={(e) => setSearchQueryById(e.target.value)}
-                className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
-              />
-            </label>
-            <label className="text-sm font-medium text-gray-700">
-              Tên trường:
+              Tên trường
               <input
                 type="text"
                 value={searchQueryByName}
@@ -144,7 +135,7 @@ const University = () => {
               />
             </label>
             <label className="text-sm font-medium text-gray-700">
-              SĐT:
+              Số điện thoại
               <input
                 type="text"
                 value={searchQueryByPhone}
@@ -152,28 +143,47 @@ const University = () => {
                 className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
               />
             </label>
+            <label className="text-sm font-medium text-gray-700">
+              Địa chỉ
+              <input
+                type="text"
+                value={searchQueryByAddress}
+                onChange={(e) => setSearchQueryByAddress(e.target.value)}
+                className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+              />
+            </label>
           </div>
         </form>
-        <table className="table-auto w-full mt-4">
+        <table className="table-auto w-full mt-4 rounded-lg shadow-md border border-gray-300">
           <thead>
-            <tr>
-              <th className="px-4 py-2">ID</th>
-              <th className="px-4 py-2">Tên trường</th>
-              <th className="px-4 py-2">SĐT</th>
-              <th className="px-4 py-2">Fax</th>
-              <th className="px-4 py-2">Email</th>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-2 font-bold">ID</th>
+              <th className="px-4 py-2 font-bold">Tên trường</th>
+              <th className="px-4 py-2 font-bold">SĐT</th>
+              <th className="px-4 py-2 font-bold">Fax</th>
+              <th className="px-4 py-2 font-bold">Email</th>
               <th className="px-4 py-2"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-center">
             {universities.map((university) => (
-              <tr key={university.id}>
-                <td className="px-4 py-2">{university.id}</td>
-                <td className="px-4 py-2">{university.name}</td>
-                <td className="px-4 py-2">{university.phone}</td>
-                <td className="px-4 py-2">{university.fax}</td>
-                <td className="px-4 py-2">{university.email}</td>
-                <td className="px-4 py-2">
+              <tr key={university.id} className="bg-white hover:bg-gray-100">
+                <td className="px-4 py-2 border-t border-b border-gray-300">
+                  {university.id}
+                </td>
+                <td className="px-4 py-2 border-t border-b border-gray-300">
+                  {university.name}
+                </td>
+                <td className="px-4 py-2 border-t border-b border-gray-300">
+                  {university.phone}
+                </td>
+                <td className="px-4 py-2 border-t border-b border-gray-300">
+                  {university.fax}
+                </td>
+                <td className="px-4 py-2 border-t border-b border-gray-300">
+                  {university.email}
+                </td>
+                <td className="px-4 py-2 border-t border-b border-gray-300 flex items-center gap-2">
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => handleDetailsClick(university)}
