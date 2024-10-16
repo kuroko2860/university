@@ -19,14 +19,16 @@ function PopularMajor() {
   }, []);
   const handlePrint = () => {
     const doc = new jsPDF();
+    doc.addFont("arial-normal", "Arial", "normal");
+    doc.setFont("Arial");
 
     doc.text("Danh sách nganh pho bien", 10, 10);
 
     // Define table columns and rows
     const tableColumns = ["ID", "Tên ngành", "Số lượt tìm kiếm"];
     const tableRows = popularMajors
-      ? popularMajors.map((major) => [
-          major.major_id,
+      ? popularMajors.map((major, index) => [
+          index + 1,
           major.major_name,
           major.search_count,
         ])
@@ -37,6 +39,10 @@ function PopularMajor() {
       head: [tableColumns],
       body: tableRows,
       startY: 20,
+      styles: {
+        font: "arial",
+        fontSize: 10,
+      },
     });
 
     // Save the PDF
@@ -54,15 +60,15 @@ function PopularMajor() {
       <table className="table-auto w-full mt-4 shadow-lg rounded-lg overflow-hidden text-center">
         <thead className="bg-gray-300">
           <tr>
-            <th className="px-6 py-3">ID</th>
+            <th className="px-6 py-3">STT</th>
             <th className="px-6 py-3">Tên ngành</th>
             <th className="px-6 py-3">Số lượt tìm kiếm</th>
           </tr>
         </thead>
         <tbody>
-          {popularMajors.map((major) => (
-            <tr key={major.id} className="odd:bg-white even:bg-gray-100">
-              <td className="px-6 py-4">{major.major_id}</td>
+          {popularMajors.map((major, index) => (
+            <tr key={index} className="odd:bg-white even:bg-gray-100">
+              <td className="px-6 py-4">{index + 1}</td>
               <td className="px-6 py-4">{major.major_name}</td>
               <td className="px-6 py-4">{major.search_count}</td>
             </tr>

@@ -132,7 +132,7 @@ function Search() {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+          className="bg-green-500 hover:bg-green-700 duration-300 text-white font-bold py-2 px-4 rounded mt-4"
         >
           Tìm kiếm
         </button>
@@ -228,7 +228,7 @@ const Universities = ({ universities, searchMajor }) => {
           <div className="flex justify-center mt-4">
             {!favorList.includes(university.id) ? (
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-green-500 hover:bg-green-700 duration-300 text-white font-bold py-2 px-4 rounded"
                 onClick={(e) => handleLikeClick(e, university)}
               >
                 Thích

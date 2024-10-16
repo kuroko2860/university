@@ -30,6 +30,8 @@ function MajorRate() {
   }, []);
   const handlePrint = () => {
     const doc = new jsPDF();
+    doc.addFont("arial-normal", "Arial", "normal");
+    doc.setFont("Arial");
 
     doc.text("Danh sách yêu thích", 10, 10);
 
@@ -56,6 +58,10 @@ function MajorRate() {
       head: [tableColumns],
       body: tableRows,
       startY: 20,
+      styles: {
+        font: "arial",
+        fontSize: 10,
+      },
     });
 
     // Save the PDF

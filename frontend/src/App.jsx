@@ -1,7 +1,6 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Home from "./pages/Home";
 import PrivateRoute from "./route/PrivateRoute";
 import Layout from "./layout/Layout";
 import Stats from "./pages/stats/Stats";
@@ -20,9 +19,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/" element={<UserLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="" element={<UserUniversity />} />
           <Route
             path="university/:id"
@@ -73,8 +72,6 @@ function App() {
 
           <Route path="popular-majors" element={<PopularMajor />} />
           <Route path="major-rate" element={<MajorRate />} />
-
-          <Route path="*" element={<Home />} />
         </Route>
       </Routes>
     </BrowserRouter>

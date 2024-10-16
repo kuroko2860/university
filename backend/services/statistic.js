@@ -21,7 +21,7 @@ async function getMostPopularMajors() {
     let result = await pool
       .request()
       .query(
-        "SELECT TOP 10 majors.*, (SELECT COUNT(*) FROM major_searches WHERE major_searches.major_name = majors.major_name) AS search_count FROM majors ORDER BY search_count DESC"
+        "SELECT distinct TOP 10  majors.major_name, (SELECT COUNT(*) FROM major_searches WHERE major_searches.major_name = majors.major_name) AS search_count FROM majors ORDER BY search_count DESC"
       );
     return result.recordset;
   } catch (error) {

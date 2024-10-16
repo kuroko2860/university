@@ -58,45 +58,60 @@ const UserUniversity = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="p-4 bg-slate-300 border border-gray-300 rounded-2xl py-8">
-        <h3 className="text-3xl font-bold mb  mb-2 text-center text-gray-700">
-          TÌM KIẾM TRƯỜNG HỌC TỐT NHẤT CHO BẠN
-        </h3>
-        <p className="text-center text-gray-500">
-          Nhanh chóng - Chính xác - Đầy đủ những thông tin mà bạn đang cần tìm
-          kiếm.
-        </p>
-        <div className="flex flex-col items-center justify-center mt-6">
-          <div className="flex justify-between items-center space-y-2">
-            <select
-              value={searchMajor}
-              onChange={(e) => setSearchMajor(e.target.value)}
-              className="mt-2 block w-full p-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
-            >
-              <option value="">Chọn chuyên ngành</option>
-              {majors &&
-                majors.map(({ major_name }) => (
-                  <option key={major_name} value={major_name}>
-                    {major_name}
-                  </option>
-                ))}
-            </select>
+      <section className="px-2 py-32 bg-white md:px-0">
+        <div className="container items-center max-w-6xl px-8 mx-auto xl:px-5">
+          <div className="flex flex-wrap items-center sm:-mx-3">
+            <div className="w-full md:w-1/2 md:px-3">
+              <div className="w-full pb-6 space-y-6 sm:max-w-md lg:max-w-lg md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0">
+                <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl">
+                  <span className="block xl:inline">Công cụ hữu ích </span>
+                  <span className="block text-green-500 xl:inline">
+                    Giúp bạn tìm kiếm trường học.
+                  </span>
+                </h1>
+                <p className="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">
+                  Nhanh chóng - dễ dàng - hiệu quả.
+                </p>
+
+                <div className="flex items-center justify-center mt-6">
+                  <select
+                    value={searchMajor}
+                    onChange={(e) => setSearchMajor(e.target.value)}
+                    className="mt-2 block w-full p-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-green-200 focus:border-green-300"
+                  >
+                    <option value="">Chọn chuyên ngành</option>
+                    {majors &&
+                      majors.map(({ major_name }) => (
+                        <option key={major_name} value={major_name}>
+                          {major_name}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <button
+                  type="submit"
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={handleSubmit}
+                >
+                  Tìm kiếm
+                </button>
+              </div>
+            </div>
+            <div className="w-full md:w-1/2">
+              <div className="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
+                <img src="https://images.unsplash.com/photo-1498049860654-af1a5c566876?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
+              </div>
+            </div>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-            onClick={handleSubmit}
-          >
-            Tìm kiếm
-          </button>
         </div>
-      </div>
+      </section>
+
       <div className=" p-4">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-600">
-          Top trường học
+          Trường học nổi bật
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16">
-          {universities.slice(0, 4).map((university) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16">
+          {universities.slice(0, 3).map((university) => (
             <UniversityCard
               key={university.id}
               university={university}
